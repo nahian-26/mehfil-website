@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# MEHFIL is a fictional hospitality portfolio concept by Invenio.
+Sitemap: https://mehfil-dining.pages.dev/sitemap.xml

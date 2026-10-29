@@ -1,0 +1,48 @@
+export const BRAND_CONFIG = {
+  name: 'MEHFIL',
+  pronunciation: 'Meh-fil',
+  descriptor: 'DINING & OCCASIONS',
+  tagline: 'The Art of Gathering.',
+  promise: 'Beautiful spaces. Exceptional dining. Unforgettable gatherings.',
+  location: 'Gulshan, Dhaka, Bangladesh',
+  studio: 'An Invenio Concept Experience',
+  disclosure:
+    'MEHFIL is a fictional hospitality concept developed by Invenio. Venue information, menu items, imagery, and booking experiences are for demonstration purposes.',
+  colors: {
+    royalGarnet: '#632640',
+    deepGarnet: '#351522',
+    midnightGarnet: '#241219',
+    jewelTeal: '#07544F',
+    deepTeal: '#063A37',
+    antiqueGold: '#C69B60',
+    mutedGold: '#A9814E',
+    warmPorcelain: '#F3ECE3',
+    softChampagne: '#E7D8C4',
+    warmStone: '#B5A69A',
+    softWarmWhite: '#FFF9F4'
+  },
+  assets: {
+    logoLight: '/assets/mehfil_logo_light.svg',
+    logoDark: '/assets/mehfil_logo_dark.svg',
+    monogram: '/assets/mehfil_monogram.svg',
+    monogramDark: '/assets/mehfil_monogram_dark.svg',
+    logoLightWebp: '/assets/mehfil_logo_light.webp',
+    logoDarkWebp: '/assets/mehfil_logo_dark.webp',
+    monogramWebp: '/assets/mehfil_monogram.webp',
+    monogramDarkWebp: '/assets/mehfil_monogram_dark.webp',
+    brandMenuCover: '/assets/brand_menu_cover.webp',
+    brandArchInterior: '/assets/brand_arch_interior.webp',
+    brandBrassCoaster: '/assets/brand_brass_coaster.webp',
+    venueMainDining: '/assets/venue_main_dining.webp',
+    venueEmeraldRoom: '/assets/venue_emerald_room.webp',
+    venueGrandHall: '/assets/venue_grand_hall.webp',
+    venueTerrace: '/assets/venue_terrace.webp',
+    eventCelebration: '/assets/event_celebration_toast.webp',
+    dishPrawns: '/assets/dish_saffron_prawns.webp',
+    dishBeef: '/assets/dish_beef_tenderloin.webp',
+    dishTikka: '/assets/dish_chicken_tikka.webp',
+    dishSeaBass: '/assets/dish_sea_bass.webp',
+    dishRisotto: '/assets/dish_mushroom_risotto.webp',
+    dishCheesecake: '/assets/dish_pistachio_cheesecake.webp'
+  }
+} as const;

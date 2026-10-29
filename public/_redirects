@@ -1,0 +1,2 @@
+# Cloudflare Pages SPA fallback so all routes work on direct browser refresh
+/*    /index.html   200
