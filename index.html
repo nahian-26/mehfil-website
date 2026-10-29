@@ -1504,14 +1504,47 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div>
-                        <label for="teaser-guests-input" class="block text-xs uppercase tracking-[0.2em] font-semibold text-garnet-deep mb-2.5">
-                          2. Estimated Guests: <span id="teaser-guests-label" class="text-teal font-semibold">${APP_STATE.teaserGuests} Guests</span>
-                        </label>
-                        <input id="teaser-guests-input" type="range" min="10" max="500" step="5" value="${APP_STATE.teaserGuests}" oninput="updateTeaserState()" class="w-full accent-teal cursor-pointer mt-1" />
-                        <div class="flex justify-between text-xs text-garnet-deep/70 mt-1.5">
-                          <span>10</span>
-                          <span>250</span>
-                          <span>500 Guests</span>
+                        <div class="flex items-center justify-between mb-2.5">
+                          <label for="teaser-guests-number" class="block text-xs uppercase tracking-[0.2em] font-semibold text-garnet-deep">
+                            2. Estimated Guests
+                          </label>
+                          <span class="text-[11px] text-garnet-deep/60 tracking-wider">Type (10–500) or slide</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                          <div class="flex-1">
+                            <input
+                              id="teaser-guests-input"
+                              type="range"
+                              min="10"
+                              max="500"
+                              step="5"
+                              value="${APP_STATE.teaserGuests}"
+                              oninput="syncTeaserGuestsFromSlider(this.value)"
+                              class="w-full accent-teal cursor-pointer"
+                              aria-label="Guest count slider"
+                            />
+                            <div class="flex justify-between text-xs text-garnet-deep/70 mt-1">
+                              <span>10</span>
+                              <span>250</span>
+                              <span>500 Guests</span>
+                            </div>
+                          </div>
+                          <div class="shrink-0 flex items-center">
+                            <input
+                              id="teaser-guests-number"
+                              type="number"
+                              min="10"
+                              max="500"
+                              step="1"
+                              value="${APP_STATE.teaserGuests}"
+                              oninput="syncTeaserGuestsFromNumber(this.value)"
+                              onblur="normalizeTeaserGuestsInput()"
+                              onkeydown="if(event.key==='Enter'){event.preventDefault();normalizeTeaserGuestsInput();}"
+                              class="w-24 px-3 py-2.5 bg-warmwhite border border-garnet/30 rounded-sm text-base font-semibold text-teal text-center focus:border-garnet focus:ring-1 focus:ring-garnet/30 focus:outline-none"
+                              placeholder="Guests"
+                              aria-label="Enter number of guests between 10 and 500"
+                            />
+                          </div>
                         </div>
                       </div>
 
@@ -1519,7 +1552,7 @@
                         <label for="teaser-date-input" class="block text-xs uppercase tracking-[0.2em] font-semibold text-garnet-deep mb-2.5">
                           3. Preferred Date
                         </label>
-                        <input id="teaser-date-input" type="date" min="2026-10-27" value="${APP_STATE.teaserDate}" onchange="updateTeaserState()" class="w-full px-4 py-3 bg-warmwhite border border-garnet/25 rounded-sm text-base font-normal text-midnight" />
+                        <input id="teaser-date-input" type="date" min="2026-10-27" value="${APP_STATE.teaserDate}" onchange="updateTeaserState()" class="w-full px-4 py-3 bg-warmwhite border border-garnet/25 rounded-sm text-base font-normal text-midnight focus:border-garnet focus:outline-none" />
                       </div>
                     </div>
 
@@ -2564,7 +2597,21 @@
                     <div class="p-6 bg-warmwhite border border-garnet/20 rounded-sm space-y-4">
                       <div class="flex items-center justify-between">
                         <span class="text-xs uppercase tracking-wider font-semibold text-garnet-deep">Estimated Guests:</span>
-                        <span class="font-display text-4xl text-teal font-semibold">${p.guestCount} Guests</span>
+                        <div class="inline-flex items-center gap-2">
+                          <input
+                            id="pl-guest-number"
+                            type="number"
+                            min="10"
+                            max="500"
+                            value="${p.guestCount}"
+                            oninput="syncPlannerGuestsFromNumber(this.value)"
+                            onblur="normalizePlannerGuestsInput()"
+                            onkeydown="if(event.key==='Enter'){event.preventDefault();normalizePlannerGuestsInput();}"
+                            class="w-24 px-3 py-1.5 bg-porcelain border border-garnet/30 rounded-sm font-display text-2xl font-bold text-teal text-center focus:border-garnet focus:outline-none"
+                            aria-label="Direct guest count input between 10 and 500"
+                          />
+                          <span class="text-sm uppercase tracking-wider font-semibold text-garnet-deep/80">Guests</span>
+                        </div>
                       </div>
                       <label for="pl-guest-slider" class="sr-only">Guest count</label>
                       <input id="pl-guest-slider" type="range" min="10" max="500" step="5" value="${p.guestCount}" oninput="updatePlannerGuestCount(this.value)" class="w-full accent-teal cursor-pointer" />
@@ -2578,8 +2625,8 @@
                     </div>
                     <div class="p-5 bg-teal-deep text-warmwhite rounded-sm">
                       <p class="text-xs uppercase tracking-[0.2em] text-gold">Recommended Setting</p>
-                      <p class="font-display text-2xl sm:text-3xl mt-1">${getRecommendedVenueByGuests(p.guestCount).name}</p>
-                      <p class="text-sm text-porcelain/85 mt-1 font-light">${getRecommendedVenueByGuests(p.guestCount).oneLineDesc}</p>
+                      <p id="pl-recommended-venue-name" class="font-display text-2xl sm:text-3xl mt-1">${getRecommendedVenueByGuests(p.guestCount).name}</p>
+                      <p id="pl-recommended-venue-desc" class="text-sm text-porcelain/85 mt-1 font-light">${getRecommendedVenueByGuests(p.guestCount).oneLineDesc}</p>
                     </div>
                   </div>
                 ` : ''}
@@ -3322,12 +3369,66 @@
       return VENUES_DATA[2]; // The Grand Mehfil Hall
     }
 
+    function syncTeaserGuestsFromSlider(val) {
+      const num = Number(val) || 10;
+      APP_STATE.teaserGuests = num;
+      const numInput = document.getElementById('teaser-guests-number');
+      if (numInput && document.activeElement !== numInput) {
+        numInput.value = num;
+      }
+      const lbl = document.getElementById('teaser-guests-label');
+      if (lbl) lbl.textContent = num + ' Guests';
+      const matchEl = document.getElementById('teaser-venue-match');
+      if (matchEl) {
+        const rec = getRecommendedVenueByGuests(num);
+        matchEl.textContent = rec.name;
+      }
+    }
+
+    function syncTeaserGuestsFromNumber(val) {
+      if (val === '') return;
+      let num = parseInt(val, 10);
+      if (isNaN(num)) return;
+      if (num > 500) num = 500;
+      if (num < 1) num = 1;
+      APP_STATE.teaserGuests = num;
+
+      const rng = document.getElementById('teaser-guests-input');
+      if (rng) rng.value = Math.min(Math.max(num, 10), 500);
+
+      const lbl = document.getElementById('teaser-guests-label');
+      if (lbl) lbl.textContent = num + ' Guests';
+
+      const matchEl = document.getElementById('teaser-venue-match');
+      if (matchEl) {
+        const rec = getRecommendedVenueByGuests(num);
+        matchEl.textContent = rec.name;
+      }
+    }
+
+    function normalizeTeaserGuestsInput() {
+      const numInput = document.getElementById('teaser-guests-number');
+      if (numInput) {
+        let num = parseInt(numInput.value, 10);
+        if (isNaN(num) || num < 10) num = 10;
+        if (num > 500) num = 500;
+        numInput.value = num;
+        syncTeaserGuestsFromNumber(num);
+      }
+    }
+
     function updateTeaserState() {
       const sel = document.getElementById('teaser-event-select');
       const rng = document.getElementById('teaser-guests-input');
+      const numInput = document.getElementById('teaser-guests-number');
       const dt = document.getElementById('teaser-date-input');
       if (sel) APP_STATE.teaserEventType = sel.value;
-      if (rng) APP_STATE.teaserGuests = Number(rng.value);
+      if (rng) {
+        APP_STATE.teaserGuests = Number(rng.value);
+        if (numInput && document.activeElement !== numInput) {
+          numInput.value = APP_STATE.teaserGuests;
+        }
+      }
       if (dt) APP_STATE.teaserDate = dt.value;
 
       const lbl = document.getElementById('teaser-guests-label');
@@ -3342,6 +3443,14 @@
 
     function launchPlannerFromTeaser(ev) {
       if (ev) ev.preventDefault();
+      const numInput = document.getElementById('teaser-guests-number');
+      if (numInput) {
+        let num = parseInt(numInput.value, 10);
+        if (!isNaN(num)) {
+          num = Math.min(Math.max(num, 10), 500);
+          APP_STATE.teaserGuests = num;
+        }
+      }
       APP_STATE.planner.eventType = APP_STATE.teaserEventType;
       APP_STATE.planner.guestCount = APP_STATE.teaserGuests;
       APP_STATE.planner.primaryDate = APP_STATE.teaserDate;
@@ -3571,6 +3680,32 @@
     function updatePlannerField(key, val) {
       APP_STATE.planner[key] = val;
       renderCurrentRoute(false);
+    }
+    function syncPlannerGuestsFromNumber(val) {
+      if (val === '') return;
+      let num = parseInt(val, 10);
+      if (isNaN(num)) return;
+      if (num > 500) num = 500;
+      if (num < 1) num = 1;
+      APP_STATE.planner.guestCount = num;
+      const rng = document.getElementById('pl-guest-slider');
+      if (rng) rng.value = Math.min(Math.max(num, 10), 500);
+      const rec = getRecommendedVenueByGuests(num);
+      APP_STATE.planner.selectedVenueId = rec.id;
+      const nameEl = document.getElementById('pl-recommended-venue-name');
+      if (nameEl) nameEl.textContent = rec.name;
+      const descEl = document.getElementById('pl-recommended-venue-desc');
+      if (descEl) descEl.textContent = rec.oneLineDesc;
+    }
+    function normalizePlannerGuestsInput() {
+      const numInput = document.getElementById('pl-guest-number');
+      if (numInput) {
+        let num = parseInt(numInput.value, 10);
+        if (isNaN(num) || num < 10) num = 10;
+        if (num > 500) num = 500;
+        numInput.value = num;
+        updatePlannerGuestCount(num);
+      }
     }
     function updatePlannerGuestCount(val) {
       const count = Number(val);
